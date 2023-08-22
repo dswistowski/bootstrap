@@ -1,0 +1,23 @@
+- name: Install skhd
+  homebrew:
+    name: koekeishiya/formulae/skhd
+  tags:
+    - install
+    - window-manager
+- name: Install skhd
+  command:
+    skhd --install-service
+  args:
+    creates: "{{ lookup('env', 'HOME') }}/Library/LaunchAgents/com.koekeishiya.skhd.plist"
+
+  tags:
+    - install 
+    - window-manager
+- name: Start skhd
+  command:
+    skhd --start-service
+
+  tags:
+    - install 
+    - window-manager
+

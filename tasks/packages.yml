@@ -1,0 +1,47 @@
+- name: tmux
+  homebrew:
+    name: tmux
+  tags:
+    - install
+    - packages
+- name: pass
+  homebrew:
+    name: pass 
+  tags:
+    - install
+    - packages
+- name: fzf 
+  homebrew:
+    name: fzf 
+  tags:
+    - install
+    - packages
+- name: Check Alacritty is installed
+  stat:
+    path: /Applications/Alacritty.app 
+  register: allactritty_path 
+  tags:
+    - install
+    - packages
+
+- name: Alacritty
+  when: "not allactritty_path.stat.exists" 
+  homebrew:
+    name: Alacritty
+  tags:
+    - install
+    - packages
+- name: Add cask-fonts
+  homebrew_tap:
+    name: homebrew/cask-fonts
+  tags:
+    - install
+    - packages
+- name: Install font for terminal 
+  homebrew:
+    name: font-iosevka 
+  ignore_errors: true
+  tags:
+    - install
+    - packages
+

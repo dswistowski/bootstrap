@@ -1,0 +1,34 @@
+- name: install gpg
+  homebrew:
+    name: gpg 
+  tags:
+    - install
+    - gpg
+- name: Import gpg public key
+  command: 
+    gpg --batch --import ./.gpg/public.pgp
+  tags:
+    - install
+    - gpg
+
+- name: Copy key
+  copy:
+    src: .gpg/private.pgp 
+    dest: .gpg/private.pgp.raw
+  tags:
+    - install
+    - gpg
+
+- name: Import gpg private key
+  command: 
+    gpg --batch --pinentry-mode loopback --passphrase {{ pgp_passphrase }} --import .gpg/private.pgp.raw
+  tags:
+    - install
+    - gpg
+- name: Remove unexpected key
+  file:
+    path: ./.gpg/../.gpg/private.pgp.raw
+    state: absent
+  tags:
+    - install
+    - gpg
